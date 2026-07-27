@@ -1,13 +1,13 @@
-# Lumen AI v1.2
+# Lumen AI v1.3 Brand Applied
 
-## 변경 사항
-- 상단 소개 문구 삭제
-- 글 작성 버튼 클릭 시 입력 화면에서 결과 화면으로 전환
-- 생성 중 로딩 애니메이션 표시
-- 결과 복사, 다시 생성, AI 수정 유지
-- 새 글 작성 버튼 추가
-- 모바일 반응형 UI
+## 적용 내용
+- 확정한 Lumen AI 가로형 SVG 로고를 상단에 적용
+- 로고 심볼 기반 앱 아이콘 적용
+- PWA 설치 아이콘 192×192, 512×512 적용
+- Apple 홈 화면 아이콘 적용
+- favicon 적용
+- manifest.webmanifest 및 service worker 추가
 
 ## 배포
-기존 GitHub Lumen 저장소의 파일을 이 압축 파일 내용으로 교체하면 Vercel이 자동 배포합니다.
-환경 변수 OPENAI_API_KEY는 그대로 유지됩니다.
+이 폴더의 전체 파일을 기존 GitHub 저장소에 덮어쓴 뒤 커밋·푸시하면 Vercel에서 자동 배포됩니다.
+기존 `OPENAI_API_KEY` 환경 변수는 그대로 유지됩니다.
