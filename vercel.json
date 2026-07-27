@@ -1,36 +1,4 @@
 {
   "version": 2,
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/public/index.html"
-    },
-    {
-      "source": "/manifest.webmanifest",
-      "destination": "/public/manifest.webmanifest"
-    },
-    {
-      "source": "/icon.svg",
-      "destination": "/public/icon.svg"
-    },
-    {
-      "source": "/sw.js",
-      "destination": "/public/sw.js"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        }
-      ]
-    }
-  ]
+  "functions": {"api/write.js": {"maxDuration": 60}}
 }
