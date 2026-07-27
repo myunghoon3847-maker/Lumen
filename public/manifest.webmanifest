@@ -1,0 +1,18 @@
+{
+  "name": "Lumen AI",
+  "short_name": "Lumen AI",
+  "description": "한 줄 요청으로 완성된 글을 작성하는 AI 글쓰기 웹앱",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f7fb",
+  "theme_color": "#6d5dfc",
+  "lang": "ko-KR",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "lumen-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "모바일 배포형 AI 글쓰기 웹앱",
+  "engines": {
+    "node": ">=18"
+  }
+}
