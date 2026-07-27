@@ -1,19 +1,236 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#6c5cff"><title>Lumen AI</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#6c5cff">
+<title>Lumen AI</title>
 <style>
-:root{--bg:#f4f5fb;--card:#fff;--text:#171827;--muted:#6d7185;--line:#e2e4ee;--primary:#6c5cff;--dark:#5547e8;--soft:#efedff;--danger:#d9372a;--danger-bg:#fff4f3;--shadow:0 10px 30px rgba(40,43,72,.07)}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:var(--text);background:var(--bg)}button,textarea{font:inherit}button{cursor:pointer}.app{width:min(100%,760px);margin:auto;padding:24px 16px 48px}.brand{display:flex;align-items:center;gap:12px;margin-bottom:26px}.logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;background:linear-gradient(145deg,#7568ff,#5b4bea);box-shadow:0 8px 22px rgba(108,92,255,.25)}.brand h1{font-size:20px;margin:0 0 2px}.brand p{font-size:13px;color:var(--muted);margin:0}.hero{margin-bottom:20px}.hero h2{margin:0 0 8px;font-size:clamp(28px,7vw,42px);line-height:1.18;letter-spacing:-1.5px}.hero p{margin:0;color:var(--muted);line-height:1.6}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px;margin-top:16px}.section-title{font-size:16px;font-weight:800;margin:0 0 13px}.preset-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}.preset-row::-webkit-scrollbar{display:none}.preset{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:#4d5165;min-height:40px;padding:0 15px;border-radius:999px;font-weight:700}.preset.active{color:var(--dark);border-color:#c9c3ff;background:var(--soft)}.field-label{display:block;font-weight:800;margin:17px 0 9px}.textarea-wrap{position:relative}textarea{width:100%;min-height:170px;resize:vertical;border:1px solid var(--line);border-radius:16px;padding:16px 16px 36px;color:var(--text);background:#fff;line-height:1.65;outline:none}textarea:focus{border-color:#9f95ff;box-shadow:0 0 0 4px rgba(108,92,255,.1)}.count{position:absolute;right:13px;bottom:11px;color:var(--muted);font-size:12px}.primary{width:100%;min-height:48px;margin-top:12px;border:0;border-radius:14px;color:#fff;background:var(--primary);font-weight:800;font-size:16px}.primary:hover{background:var(--dark)}.primary:disabled,.secondary:disabled,.edit-button:disabled{opacity:.55;cursor:not-allowed}.status{min-height:21px;margin:10px 2px 0;color:var(--muted);font-size:13px}.result{min-height:210px;white-space:pre-wrap;line-height:1.75;border:1px solid var(--line);border-radius:16px;background:#fbfbfe;padding:16px;overflow-wrap:anywhere}.result.empty{color:#9296a8}.result.error{color:var(--danger);background:var(--danger-bg);border-color:#ffc8c3}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.secondary{min-height:46px;border:1px solid #d7d3ff;border-radius:14px;background:var(--soft);color:var(--dark);font-weight:800}.edit-area{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.edit-row{display:grid;grid-template-columns:1fr auto;gap:9px}.edit-row textarea{min-height:48px;height:48px;resize:none;padding:12px 14px}.edit-button{min-width:92px;border:0;border-radius:14px;color:#fff;background:#292b38;font-weight:800}.hidden{display:none}@media(max-width:520px){.app{padding:18px 12px 40px}.card{padding:16px;border-radius:20px}.hero h2{font-size:31px}.edit-row{grid-template-columns:1fr}.edit-button{min-height:46px}}
+:root{--bg:#f4f5fb;--card:#fff;--text:#171827;--muted:#6d7185;--line:#e2e4ee;--primary:#6c5cff;--dark:#5547e8;--soft:#efedff;--danger:#d9372a;--danger-bg:#fff4f3;--shadow:0 10px 30px rgba(40,43,72,.07)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:var(--text);background:var(--bg)}
+button,textarea{font:inherit}button{cursor:pointer}.app{width:min(100%,760px);margin:auto;padding:24px 16px 48px}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}.logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;background:linear-gradient(145deg,#7568ff,#5b4bea);box-shadow:0 8px 22px rgba(108,92,255,.25)}
+.brand h1{font-size:20px;margin:0 0 2px}.brand p{font-size:13px;color:var(--muted);margin:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px;margin-top:16px}
+.section-title{font-size:16px;font-weight:800;margin:0 0 13px}.preset-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}.preset-row::-webkit-scrollbar{display:none}
+.preset{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:#4d5165;min-height:40px;padding:0 15px;border-radius:999px;font-weight:700}
+.preset.active{color:var(--dark);border-color:#c9c3ff;background:var(--soft)}.field-label{display:block;font-weight:800;margin:17px 0 9px}.textarea-wrap{position:relative}
+textarea{width:100%;min-height:170px;resize:vertical;border:1px solid var(--line);border-radius:16px;padding:16px 16px 36px;color:var(--text);background:#fff;line-height:1.65;outline:none}
+textarea:focus{border-color:#9f95ff;box-shadow:0 0 0 4px rgba(108,92,255,.1)}.count{position:absolute;right:13px;bottom:11px;color:var(--muted);font-size:12px}
+.primary{width:100%;min-height:48px;margin-top:12px;border:0;border-radius:14px;color:#fff;background:var(--primary);font-weight:800;font-size:16px}
+.primary:hover{background:var(--dark)}.primary:disabled,.secondary:disabled,.edit-button:disabled{opacity:.55;cursor:not-allowed}
+.status{min-height:21px;margin:10px 2px 0;color:var(--muted);font-size:13px}
+.result{min-height:210px;white-space:pre-wrap;line-height:1.75;border:1px solid var(--line);border-radius:16px;background:#fbfbfe;padding:16px;overflow-wrap:anywhere}
+.result.error{color:var(--danger);background:var(--danger-bg);border-color:#ffc8c3}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.secondary{min-height:46px;border:1px solid #d7d3ff;border-radius:14px;background:var(--soft);color:var(--dark);font-weight:800}
+.edit-area{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.edit-row{display:grid;grid-template-columns:1fr auto;gap:9px}
+.edit-row textarea{min-height:48px;height:48px;resize:none;padding:12px 14px}.edit-button{min-width:92px;border:0;border-radius:14px;color:#fff;background:#292b38;font-weight:800}
+.new-button{margin-top:10px;background:#fff;color:#4d5165;border:1px solid var(--line)}.new-button:hover{background:#f7f7fb}
+.loading-box{min-height:210px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;color:var(--muted);border:1px solid var(--line);border-radius:16px;background:#fbfbfe}
+.spinner{width:34px;height:34px;border:4px solid #e5e2ff;border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}.hidden{display:none}
+@media(max-width:520px){.app{padding:18px 12px 40px}.card{padding:16px;border-radius:20px}.edit-row{grid-template-columns:1fr}.edit-button{min-height:46px}}
 </style>
 </head>
 <body>
 <main class="app">
 <header class="brand"><div class="logo">L</div><div><h1>Lumen AI</h1><p>한 줄로 시작하는 AI 글쓰기</p></div></header>
-<section class="hero"><h2>무엇을 쓰고 싶은지<br>편하게 적어보세요.</h2><p>필요한 글의 핵심만 적으면 자연스럽게 완성합니다.</p></section>
-<section class="card"><h3 class="section-title">빠른 시작</h3><div class="preset-row"><button class="preset active" data-preset="자유">자유 작성</button><button class="preset" data-preset="블로그">블로그</button><button class="preset" data-preset="유튜브">유튜브</button><button class="preset" data-preset="마케팅">마케팅</button><button class="preset" data-preset="자기소개서">자기소개서</button><button class="preset" data-preset="이메일">이메일</button></div><label class="field-label" for="request">글쓰기 요청</label><div class="textarea-wrap"><textarea id="request" maxlength="2000" placeholder="예: 일본어 학습 앱 사용 후기를 네이버 블로그에 올릴 수 있도록 친근하고 자세하게 작성해줘"></textarea><span class="count"><span id="requestCount">0</span>/2000</span></div><button id="writeButton" class="primary">글쓰기</button><p id="status" class="status" aria-live="polite"></p></section>
-<section class="card"><h3 class="section-title">작성 결과</h3><div id="result" class="result empty">작성된 글이 여기에 표시됩니다.</div><div class="actions"><button id="copyButton" class="secondary" disabled>결과 복사</button><button id="retryButton" class="secondary" disabled>다시 생성</button></div><div id="editArea" class="edit-area hidden"><label class="field-label" for="editRequest">AI에게 수정 요청</label><div class="edit-row"><textarea id="editRequest" maxlength="500" placeholder="예: 더 친근하게 바꿔줘"></textarea><button id="editButton" class="edit-button">수정하기</button></div></div></section>
+
+<section id="inputCard" class="card">
+<h3 class="section-title">빠른 시작</h3>
+<div class="preset-row">
+<button class="preset active" data-preset="자유">자유 작성</button>
+<button class="preset" data-preset="블로그">블로그</button>
+<button class="preset" data-preset="유튜브">유튜브</button>
+<button class="preset" data-preset="마케팅">마케팅</button>
+<button class="preset" data-preset="자기소개서">자기소개서</button>
+<button class="preset" data-preset="이메일">이메일</button>
+</div>
+<label class="field-label" for="request">글쓰기 요청</label>
+<div class="textarea-wrap">
+<textarea id="request" maxlength="2000" placeholder="예: 일본어 학습 앱 사용 후기를 네이버 블로그에 올릴 수 있도록 친근하고 자세하게 작성해줘"></textarea>
+<span class="count"><span id="requestCount">0</span>/2000</span>
+</div>
+<button id="writeButton" class="primary">글 작성</button>
+<p id="status" class="status" aria-live="polite"></p>
+</section>
+
+<section id="resultCard" class="card hidden">
+<h3 class="section-title">작성 결과</h3>
+<div id="result" class="result"></div>
+<div class="actions">
+<button id="copyButton" class="secondary" disabled>결과 복사</button>
+<button id="retryButton" class="secondary" disabled>다시 생성</button>
+</div>
+<div id="editArea" class="edit-area hidden">
+<label class="field-label" for="editRequest">AI에게 수정 요청</label>
+<div class="edit-row">
+<textarea id="editRequest" maxlength="500" placeholder="예: 더 친근하게 바꿔줘"></textarea>
+<button id="editButton" class="edit-button">수정하기</button>
+</div>
+</div>
+<button id="newButton" class="primary new-button">새 글 작성</button>
+</section>
 </main>
+
 <script>
-const requestEl=document.getElementById('request'),requestCountEl=document.getElementById('requestCount'),writeButton=document.getElementById('writeButton'),retryButton=document.getElementById('retryButton'),copyButton=document.getElementById('copyButton'),resultEl=document.getElementById('result'),statusEl=document.getElementById('status'),editArea=document.getElementById('editArea'),editRequestEl=document.getElementById('editRequest'),editButton=document.getElementById('editButton'),presetButtons=[...document.querySelectorAll('.preset')];let selectedPreset='자유',lastResult='';requestEl.addEventListener('input',()=>requestCountEl.textContent=requestEl.value.length);presetButtons.forEach(b=>b.addEventListener('click',()=>{selectedPreset=b.dataset.preset;presetButtons.forEach(x=>x.classList.remove('active'));b.classList.add('active');requestEl.focus()}));function setLoading(v,m=''){writeButton.disabled=v;retryButton.disabled=v||!lastResult;editButton.disabled=v;writeButton.textContent=v?'작성 중...':'글쓰기';statusEl.textContent=m}function showResult(t,e=false){resultEl.textContent=t;resultEl.classList.remove('empty','error');if(e){resultEl.classList.add('error');copyButton.disabled=true;retryButton.disabled=true;editArea.classList.add('hidden');return}lastResult=t;copyButton.disabled=false;retryButton.disabled=false;editArea.classList.remove('hidden')}async function callApi(payload){const r=await fetch('/api/write',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'글을 작성하지 못했습니다.');return d.text}async function generate(){const request=requestEl.value.trim();if(!request){requestEl.focus();statusEl.textContent='작성할 내용을 입력해 주세요.';return}setLoading(true,'글을 작성하고 있습니다.');try{const t=await callApi({mode:'generate',preset:selectedPreset,request});showResult(t);statusEl.textContent='글쓰기가 완료되었습니다.'}catch(e){showResult(e.message,true);statusEl.textContent='글쓰기 중 오류가 발생했습니다.'}finally{setLoading(false)}}async function revise(){const instruction=editRequestEl.value.trim();if(!lastResult||!instruction){editRequestEl.focus();return}setLoading(true,'요청에 맞게 글을 수정하고 있습니다.');try{const t=await callApi({mode:'revise',preset:selectedPreset,request:requestEl.value.trim(),previousText:lastResult,instruction});showResult(t);editRequestEl.value='';statusEl.textContent='수정이 완료되었습니다.'}catch(e){showResult(e.message,true);statusEl.textContent='수정 중 오류가 발생했습니다.'}finally{setLoading(false)}}writeButton.addEventListener('click',generate);retryButton.addEventListener('click',generate);editButton.addEventListener('click',revise);copyButton.addEventListener('click',async()=>{if(!lastResult)return;try{await navigator.clipboard.writeText(lastResult)}catch{const t=document.createElement('textarea');t.value=lastResult;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}copyButton.textContent='복사 완료';setTimeout(()=>copyButton.textContent='결과 복사',1400)});
+const requestEl=document.getElementById('request');
+const requestCountEl=document.getElementById('requestCount');
+const writeButton=document.getElementById('writeButton');
+const retryButton=document.getElementById('retryButton');
+const copyButton=document.getElementById('copyButton');
+const resultEl=document.getElementById('result');
+const statusEl=document.getElementById('status');
+const editArea=document.getElementById('editArea');
+const editRequestEl=document.getElementById('editRequest');
+const editButton=document.getElementById('editButton');
+const newButton=document.getElementById('newButton');
+const inputCard=document.getElementById('inputCard');
+const resultCard=document.getElementById('resultCard');
+const presetButtons=[...document.querySelectorAll('.preset')];
+
+let selectedPreset='자유';
+let lastResult='';
+
+requestEl.addEventListener('input',()=>requestCountEl.textContent=requestEl.value.length);
+
+presetButtons.forEach(b=>b.addEventListener('click',()=>{
+  selectedPreset=b.dataset.preset;
+  presetButtons.forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  requestEl.focus();
+}));
+
+function showInputScreen(){
+  resultCard.classList.add('hidden');
+  inputCard.classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+  requestEl.focus();
+}
+
+function showResultScreen(){
+  inputCard.classList.add('hidden');
+  resultCard.classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showLoadingScreen(message){
+  showResultScreen();
+  resultEl.className='loading-box';
+  resultEl.innerHTML='<div class="spinner" aria-hidden="true"></div><strong>'+message+'</strong>';
+  copyButton.disabled=true;
+  retryButton.disabled=true;
+  editArea.classList.add('hidden');
+}
+
+function setLoading(v,m=''){
+  writeButton.disabled=v;
+  retryButton.disabled=v||!lastResult;
+  editButton.disabled=v;
+  statusEl.textContent=m;
+}
+
+function showResult(text,isError=false){
+  resultEl.className='result';
+  resultEl.textContent=text;
+  if(isError){
+    resultEl.classList.add('error');
+    copyButton.disabled=true;
+    retryButton.disabled=true;
+    editArea.classList.add('hidden');
+    return;
+  }
+  lastResult=text;
+  copyButton.disabled=false;
+  retryButton.disabled=false;
+  editArea.classList.remove('hidden');
+}
+
+async function callApi(payload){
+  const r=await fetch('/api/write',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  });
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(d.error||'글을 작성하지 못했습니다.');
+  return d.text;
+}
+
+async function generate(){
+  const request=requestEl.value.trim();
+  if(!request){
+    requestEl.focus();
+    statusEl.textContent='작성할 내용을 입력해 주세요.';
+    return;
+  }
+  setLoading(true,'');
+  showLoadingScreen('AI가 글을 작성하고 있습니다.');
+  try{
+    const text=await callApi({mode:'generate',preset:selectedPreset,request});
+    showResult(text);
+  }catch(e){
+    showResult(e.message,true);
+  }finally{
+    setLoading(false);
+  }
+}
+
+async function revise(){
+  const instruction=editRequestEl.value.trim();
+  if(!lastResult||!instruction){
+    editRequestEl.focus();
+    return;
+  }
+  setLoading(true,'');
+  showLoadingScreen('요청에 맞게 글을 수정하고 있습니다.');
+  try{
+    const text=await callApi({
+      mode:'revise',
+      preset:selectedPreset,
+      request:requestEl.value.trim(),
+      previousText:lastResult,
+      instruction
+    });
+    showResult(text);
+    editRequestEl.value='';
+  }catch(e){
+    showResult(e.message,true);
+  }finally{
+    setLoading(false);
+  }
+}
+
+writeButton.addEventListener('click',generate);
+retryButton.addEventListener('click',generate);
+editButton.addEventListener('click',revise);
+
+newButton.addEventListener('click',()=>{
+  lastResult='';
+  resultEl.className='result';
+  resultEl.textContent='';
+  editRequestEl.value='';
+  copyButton.disabled=true;
+  retryButton.disabled=true;
+  editArea.classList.add('hidden');
+  showInputScreen();
+});
+
+copyButton.addEventListener('click',async()=>{
+  if(!lastResult)return;
+  try{
+    await navigator.clipboard.writeText(lastResult);
+  }catch{
+    const t=document.createElement('textarea');
+    t.value=lastResult;
+    document.body.appendChild(t);
+    t.select();
+    document.execCommand('copy');
+    t.remove();
+  }
+  copyButton.textContent='복사 완료';
+  setTimeout(()=>copyButton.textContent='결과 복사',1400);
+});
 </script>
-</body></html>
+</body>
+</html>
