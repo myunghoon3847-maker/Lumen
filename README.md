@@ -20,3 +20,8 @@
 ```json
 {"ok":true,"apiKeyConfigured":true,"model":"automatic"}
 ```
+
+
+## v1.6.2 deployment fix
+- Replaced individual function patterns with `api/*.js` to prevent Vercel UNMATCHED_FUNCTION_PATTERN build failures.
+- Both `/api/write` and `/api/health` are automatically detected from the root `api` directory.
