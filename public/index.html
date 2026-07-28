@@ -4,236 +4,63 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#6c5cff">
+<meta name="description" content="한 줄의 요청으로 완성도 높은 글을 만드는 AI 글쓰기 도구">
 <link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" href="/favicon.ico?v=140">
-<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=140">
+<link rel="icon" href="/favicon.ico?v=161">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=161">
 <title>Lumen AI</title>
 <style>
-:root{--bg:#f4f5fb;--card:#fff;--text:#171827;--muted:#6d7185;--line:#e2e4ee;--primary:#6c5cff;--dark:#5547e8;--soft:#efedff;--danger:#d9372a;--danger-bg:#fff4f3;--shadow:0 10px 30px rgba(40,43,72,.07)}
-*{box-sizing:border-box}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:var(--text);background:var(--bg)}
-button,textarea{font:inherit}button{cursor:pointer}.app{width:min(100%,760px);margin:auto;padding:24px 16px 48px}
-.brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}.logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;background:linear-gradient(145deg,#7568ff,#5b4bea);box-shadow:0 8px 22px rgba(108,92,255,.25)}.brand h1{font-size:20px;margin:0 0 2px}.brand p{font-size:13px;color:var(--muted);margin:0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px;margin-top:16px}
-.section-title{font-size:16px;font-weight:800;margin:0 0 13px}.preset-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}.preset-row::-webkit-scrollbar{display:none}
-.preset{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:#4d5165;min-height:40px;padding:0 15px;border-radius:999px;font-weight:700}
-.preset.active{color:var(--dark);border-color:#c9c3ff;background:var(--soft)}.field-label{display:block;font-weight:800;margin:17px 0 9px}.textarea-wrap{position:relative}
-textarea{width:100%;min-height:170px;resize:vertical;border:1px solid var(--line);border-radius:16px;padding:16px 16px 36px;color:var(--text);background:#fff;line-height:1.65;outline:none}
-textarea:focus{border-color:#9f95ff;box-shadow:0 0 0 4px rgba(108,92,255,.1)}.count{position:absolute;right:13px;bottom:11px;color:var(--muted);font-size:12px}
-.primary{width:100%;min-height:48px;margin-top:12px;border:0;border-radius:14px;color:#fff;background:var(--primary);font-weight:800;font-size:16px}
-.primary:hover{background:var(--dark)}.primary:disabled,.secondary:disabled,.edit-button:disabled{opacity:.55;cursor:not-allowed}
-.status{min-height:21px;margin:10px 2px 0;color:var(--muted);font-size:13px}
-.result{min-height:210px;white-space:pre-wrap;line-height:1.75;border:1px solid var(--line);border-radius:16px;background:#fbfbfe;padding:16px;overflow-wrap:anywhere}
-.result.error{color:var(--danger);background:var(--danger-bg);border-color:#ffc8c3}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.secondary{min-height:46px;border:1px solid #d7d3ff;border-radius:14px;background:var(--soft);color:var(--dark);font-weight:800}
-.edit-area{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.edit-row{display:grid;grid-template-columns:1fr auto;gap:9px}
-.edit-row textarea{min-height:48px;height:48px;resize:none;padding:12px 14px}.edit-button{min-width:92px;border:0;border-radius:14px;color:#fff;background:#292b38;font-weight:800}
-.new-button{margin-top:10px;background:#fff;color:#4d5165;border:1px solid var(--line)}.new-button:hover{background:#f7f7fb}
-.loading-box{min-height:210px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;color:var(--muted);border:1px solid var(--line);border-radius:16px;background:#fbfbfe}
-.spinner{width:34px;height:34px;border:4px solid #e5e2ff;border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}.hidden{display:none}
-@media(max-width:520px){.app{padding:18px 12px 40px}.card{padding:16px;border-radius:20px}.edit-row{grid-template-columns:1fr}.edit-button{min-height:46px}}
+:root{--bg:#f5f6fb;--card:#fff;--text:#171827;--muted:#6d7185;--line:#e4e6ef;--primary:#6c5cff;--primary-dark:#5547e8;--soft:#efedff;--danger:#cf3c31;--danger-bg:#fff4f3;--success:#17864b;--shadow:0 14px 36px rgba(38,40,65,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:var(--text);background:radial-gradient(circle at top,#ece9ff 0,#f5f6fb 360px)}button,textarea,select,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}.app{width:min(100%,920px);margin:auto;padding:28px 16px 56px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;color:#fff;font-weight:850;font-size:21px;background:linear-gradient(145deg,#7568ff,#5b4bea);box-shadow:0 9px 24px rgba(108,92,255,.28)}.brand h1{font-size:21px;margin:0 0 2px}.brand p{font-size:13px;color:var(--muted);margin:0}.top-actions{display:flex;gap:8px}.install,.ghost{min-height:40px;padding:0 14px;border:1px solid #d5d0ff;border-radius:12px;background:#fff;color:var(--primary-dark);font-weight:750}.ghost{border-color:var(--line);color:#4d5165}.hero{padding:4px 2px 2px}.hero h2{margin:0;font-size:clamp(25px,5vw,38px);line-height:1.2;letter-spacing:-.03em}.hero p{margin:10px 0 0;color:var(--muted);line-height:1.6}.card{background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:20px;margin-top:18px}.section-head,.result-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:13px}.section-title{font-size:16px;font-weight:850;margin:0}.hint,.meta{font-size:12px;color:var(--muted)}.preset-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.preset-row::-webkit-scrollbar{display:none}.preset{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:#4d5165;min-height:40px;padding:0 15px;border-radius:999px;font-weight:750}.preset.active{color:var(--primary-dark);border-color:#c9c3ff;background:var(--soft)}.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}.control label,.field-label{display:block;font-size:13px;font-weight:800;margin:0 0 8px}.control select{width:100%;height:44px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--text);padding:0 12px;outline:none}.control select:focus,textarea:focus{border-color:#9f95ff;box-shadow:0 0 0 4px rgba(108,92,255,.1)}.textarea-wrap{position:relative}textarea{width:100%;min-height:180px;resize:vertical;border:1px solid var(--line);border-radius:16px;padding:16px 16px 38px;color:var(--text);background:#fff;line-height:1.65;outline:none}.count{position:absolute;right:13px;bottom:11px;color:var(--muted);font-size:12px}.examples,.quick-rewrite{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 0}.example,.quick{border:0;background:#f1f2f7;color:#55596c;border-radius:10px;padding:8px 10px;font-size:12px}.quick{border:1px solid #dedaf7;background:#faf9ff;color:#574dc0;font-weight:750}.primary{width:100%;min-height:50px;margin-top:14px;border:0;border-radius:14px;color:#fff;background:linear-gradient(135deg,#7568ff,#5b4bea);font-weight:850;font-size:16px;box-shadow:0 8px 20px rgba(108,92,255,.2)}.primary:disabled,.secondary:disabled,.edit-button:disabled,.quick:disabled{opacity:.52;cursor:not-allowed}.status{min-height:20px;margin:10px 2px 0;color:var(--muted);font-size:13px}.result-editor{min-height:270px;white-space:pre-wrap;line-height:1.78;border:1px solid var(--line);border-radius:16px;background:#fcfcff;padding:18px;overflow-wrap:anywhere;resize:vertical}.result-editor.error{color:var(--danger);background:var(--danger-bg);border-color:#ffc8c3}.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:12px}.secondary{min-height:46px;border:1px solid #d9d6f4;border-radius:13px;background:#f7f6ff;color:#4f45bd;font-weight:800}.secondary.danger{color:var(--danger);border-color:#f0c7c3;background:#fff8f7}.edit-area{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.edit-row{display:grid;grid-template-columns:1fr auto;gap:9px}.edit-row textarea{min-height:48px;height:48px;resize:none;padding:12px 14px}.edit-button{min-width:96px;border:0;border-radius:13px;color:#fff;background:#292b38;font-weight:800}.new-button{margin-top:10px;background:#fff;color:#4d5165;border:1px solid var(--line);box-shadow:none}.loading-box{min-height:270px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;color:var(--muted);border:1px solid var(--line);border-radius:16px;background:#fcfcff}.spinner{width:35px;height:35px;border:4px solid #e5e2ff;border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.footer{padding:22px 2px 0;text-align:center;color:var(--muted);font-size:12px}.drawer-backdrop{position:fixed;inset:0;background:rgba(20,22,35,.38);z-index:20}.drawer{position:fixed;top:0;right:0;width:min(92vw,420px);height:100vh;background:#fff;z-index:21;box-shadow:-12px 0 36px rgba(30,32,50,.16);display:flex;flex-direction:column}.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:18px;border-bottom:1px solid var(--line)}.drawer-head h2{font-size:18px;margin:0}.history-list{padding:12px;overflow:auto;flex:1}.history-empty{color:var(--muted);text-align:center;padding:54px 14px}.history-item{border:1px solid var(--line);border-radius:15px;padding:13px;margin-bottom:10px;background:#fff}.history-item h3{font-size:14px;margin:0 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.history-item p{font-size:12px;color:var(--muted);margin:0 0 10px}.history-actions{display:flex;gap:7px}.history-actions button{flex:1;min-height:36px;border-radius:10px;border:1px solid var(--line);background:#f8f8fb;font-weight:750;font-size:12px}.drawer-foot{padding:12px 18px 18px;border-top:1px solid var(--line)}
+@media(max-width:620px){.app{padding:18px 12px 42px}.topbar{align-items:flex-start}.top-actions{flex-direction:column}.install,.ghost{font-size:12px;min-height:36px}.hero h2{font-size:28px}.card{padding:16px;border-radius:20px}.controls{grid-template-columns:1fr}.actions{grid-template-columns:1fr 1fr}.edit-row{grid-template-columns:1fr}.edit-button{min-height:46px}.result-editor{min-height:320px}}
 </style>
 </head>
 <body>
 <main class="app">
-<header class="brand"><div class="logo" aria-hidden="true">L</div><div><h1>Lumen AI</h1><p>한 줄로 시작하는 AI 글쓰기</p></div></header>
-
+<header class="topbar"><div class="brand"><div class="logo" aria-hidden="true">L</div><div><h1>Lumen AI</h1><p>한 줄로 시작하는 AI 글쓰기</p></div></div><div class="top-actions"><button id="historyButton" class="ghost">작성 이력</button><button id="installButton" class="install hidden">앱 설치</button></div></header>
+<section class="hero"><h2>생각만 적으세요.<br>완성된 글은 AI가 만듭니다.</h2><p>목적과 분위기를 선택하면 블로그, 이메일, 마케팅 문구까지 바로 사용할 수 있는 글로 작성합니다.</p></section>
 <section id="inputCard" class="card">
-<h3 class="section-title">빠른 시작</h3>
-<div class="preset-row">
-<button class="preset active" data-preset="자유">자유 작성</button>
-<button class="preset" data-preset="블로그">블로그</button>
-<button class="preset" data-preset="유튜브">유튜브</button>
-<button class="preset" data-preset="마케팅">마케팅</button>
-<button class="preset" data-preset="자기소개서">자기소개서</button>
-<button class="preset" data-preset="이메일">이메일</button>
-</div>
-<label class="field-label" for="request">글쓰기 요청</label>
-<div class="textarea-wrap">
-<textarea id="request" maxlength="2000" placeholder="예: 일본어 학습 앱 사용 후기를 네이버 블로그에 올릴 수 있도록 친근하고 자세하게 작성해줘"></textarea>
-<span class="count"><span id="requestCount">0</span>/2000</span>
-</div>
-<button id="writeButton" class="primary">글 작성</button>
-<p id="status" class="status" aria-live="polite"></p>
+<div class="section-head"><h3 class="section-title">글쓰기 설정</h3><span class="hint">Ctrl + Enter로 생성</span></div>
+<div class="preset-row" aria-label="글 종류 선택"><button class="preset active" data-preset="자유">자유 작성</button><button class="preset" data-preset="블로그">블로그</button><button class="preset" data-preset="유튜브">유튜브</button><button class="preset" data-preset="마케팅">마케팅</button><button class="preset" data-preset="자기소개서">자기소개서</button><button class="preset" data-preset="이메일">이메일</button></div>
+<div class="controls"><div class="control"><label for="tone">문체</label><select id="tone"><option>자연스럽게</option><option>친근하게</option><option>전문적으로</option><option>설득력 있게</option><option>간결하게</option></select></div><div class="control"><label for="length">분량</label><select id="length"><option value="short">짧게</option><option value="medium" selected>보통</option><option value="long">길게</option></select></div></div>
+<label class="field-label" for="request">글쓰기 요청</label><div class="textarea-wrap"><textarea id="request" maxlength="2000" placeholder="예: 일본어 학습 앱 사용 후기를 네이버 블로그에 올릴 수 있도록 친근하고 자세하게 작성해줘"></textarea><span class="count"><span id="requestCount">0</span>/2000</span></div>
+<div class="examples"><button class="example" data-example="초보자를 위한 일본어 학습 앱 소개 글을 작성해줘">앱 소개</button><button class="example" data-example="회의 일정 변경을 알리는 정중한 업무 이메일을 작성해줘">업무 이메일</button><button class="example" data-example="신제품의 핵심 장점을 강조하는 짧은 홍보 문구를 작성해줘">홍보 문구</button></div>
+<button id="writeButton" class="primary">AI로 글 작성</button><p id="status" class="status" aria-live="polite"></p>
 </section>
-
 <section id="resultCard" class="card hidden">
-<h3 class="section-title">작성 결과</h3>
-<div id="result" class="result"></div>
-<div class="actions">
-<button id="copyButton" class="secondary" disabled>결과 복사</button>
-<button id="retryButton" class="secondary" disabled>다시 생성</button>
-</div>
-<div id="editArea" class="edit-area hidden">
-<label class="field-label" for="editRequest">AI에게 수정 요청</label>
-<div class="edit-row">
-<textarea id="editRequest" maxlength="500" placeholder="예: 더 친근하게 바꿔줘"></textarea>
-<button id="editButton" class="edit-button">수정하기</button>
-</div>
-</div>
+<div class="result-toolbar"><h3 class="section-title">작성 결과</h3><span id="resultMeta" class="meta"></span></div>
+<textarea id="result" class="result-editor" aria-label="작성 결과 편집"></textarea>
+<div class="quick-rewrite" aria-label="빠른 재작성"><button class="quick" data-instruction="더 짧고 핵심적으로 다듬어줘">더 짧게</button><button class="quick" data-instruction="내용을 더 풍부하고 자세하게 확장해줘">더 길게</button><button class="quick" data-instruction="문장을 더 자연스럽고 매끄럽게 다듬어줘">자연스럽게</button><button class="quick" data-instruction="더 전문적이고 신뢰감 있는 문체로 바꿔줘">전문적으로</button><button class="quick" data-instruction="맞춤법과 띄어쓰기, 어색한 표현을 교정해줘">맞춤법 교정</button></div>
+<div class="actions"><button id="copyButton" class="secondary" disabled>복사</button><button id="retryButton" class="secondary" disabled>다시 생성</button><button id="restoreButton" class="secondary" disabled>원본 복원</button><button id="downloadButton" class="secondary" disabled>TXT 저장</button></div>
+<div id="editArea" class="edit-area hidden"><label class="field-label" for="editRequest">AI에게 수정 요청</label><div class="edit-row"><textarea id="editRequest" maxlength="500" placeholder="예: 더 친근하게 바꿔줘"></textarea><button id="editButton" class="edit-button">수정하기</button></div></div>
 <button id="newButton" class="primary new-button">새 글 작성</button>
 </section>
+<footer class="footer">민감한 개인정보는 입력하지 마세요. AI 결과는 사용 전 확인이 필요합니다.</footer>
 </main>
-
+<div id="drawerBackdrop" class="drawer-backdrop hidden"></div><aside id="historyDrawer" class="drawer hidden" aria-label="작성 이력"><div class="drawer-head"><h2>작성 이력</h2><button id="closeHistory" class="ghost">닫기</button></div><div id="historyList" class="history-list"></div><div class="drawer-foot"><button id="clearHistory" class="secondary danger" style="width:100%">이력 전체 삭제</button></div></aside>
 <script>
-const requestEl=document.getElementById('request');
-const requestCountEl=document.getElementById('requestCount');
-const writeButton=document.getElementById('writeButton');
-const retryButton=document.getElementById('retryButton');
-const copyButton=document.getElementById('copyButton');
-const resultEl=document.getElementById('result');
-const statusEl=document.getElementById('status');
-const editArea=document.getElementById('editArea');
-const editRequestEl=document.getElementById('editRequest');
-const editButton=document.getElementById('editButton');
-const newButton=document.getElementById('newButton');
-const inputCard=document.getElementById('inputCard');
-const resultCard=document.getElementById('resultCard');
-const presetButtons=[...document.querySelectorAll('.preset')];
-
-let selectedPreset='자유';
-let lastResult='';
-
-requestEl.addEventListener('input',()=>requestCountEl.textContent=requestEl.value.length);
-
-presetButtons.forEach(b=>b.addEventListener('click',()=>{
-  selectedPreset=b.dataset.preset;
-  presetButtons.forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  requestEl.focus();
-}));
-
-function showInputScreen(){
-  resultCard.classList.add('hidden');
-  inputCard.classList.remove('hidden');
-  window.scrollTo({top:0,behavior:'smooth'});
-  requestEl.focus();
-}
-
-function showResultScreen(){
-  inputCard.classList.add('hidden');
-  resultCard.classList.remove('hidden');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function showLoadingScreen(message){
-  showResultScreen();
-  resultEl.className='loading-box';
-  resultEl.innerHTML='<div class="spinner" aria-hidden="true"></div><strong>'+message+'</strong>';
-  copyButton.disabled=true;
-  retryButton.disabled=true;
-  editArea.classList.add('hidden');
-}
-
-function setLoading(v,m=''){
-  writeButton.disabled=v;
-  retryButton.disabled=v||!lastResult;
-  editButton.disabled=v;
-  statusEl.textContent=m;
-}
-
-function showResult(text,isError=false){
-  resultEl.className='result';
-  resultEl.textContent=text;
-  if(isError){
-    resultEl.classList.add('error');
-    copyButton.disabled=true;
-    retryButton.disabled=true;
-    editArea.classList.add('hidden');
-    return;
-  }
-  lastResult=text;
-  copyButton.disabled=false;
-  retryButton.disabled=false;
-  editArea.classList.remove('hidden');
-}
-
-async function callApi(payload){
-  const r=await fetch('/api/write',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(payload)
-  });
-  const d=await r.json().catch(()=>({}));
-  if(!r.ok)throw new Error(d.error||'글을 작성하지 못했습니다.');
-  return d.text;
-}
-
-async function generate(){
-  const request=requestEl.value.trim();
-  if(!request){
-    requestEl.focus();
-    statusEl.textContent='작성할 내용을 입력해 주세요.';
-    return;
-  }
-  setLoading(true,'');
-  showLoadingScreen('AI가 글을 작성하고 있습니다.');
-  try{
-    const text=await callApi({mode:'generate',preset:selectedPreset,request});
-    showResult(text);
-  }catch(e){
-    showResult(e.message,true);
-  }finally{
-    setLoading(false);
-  }
-}
-
-async function revise(){
-  const instruction=editRequestEl.value.trim();
-  if(!lastResult||!instruction){
-    editRequestEl.focus();
-    return;
-  }
-  setLoading(true,'');
-  showLoadingScreen('요청에 맞게 글을 수정하고 있습니다.');
-  try{
-    const text=await callApi({
-      mode:'revise',
-      preset:selectedPreset,
-      request:requestEl.value.trim(),
-      previousText:lastResult,
-      instruction
-    });
-    showResult(text);
-    editRequestEl.value='';
-  }catch(e){
-    showResult(e.message,true);
-  }finally{
-    setLoading(false);
-  }
-}
-
-writeButton.addEventListener('click',generate);
-retryButton.addEventListener('click',generate);
-editButton.addEventListener('click',revise);
-
-newButton.addEventListener('click',()=>{
-  lastResult='';
-  resultEl.className='result';
-  resultEl.textContent='';
-  editRequestEl.value='';
-  copyButton.disabled=true;
-  retryButton.disabled=true;
-  editArea.classList.add('hidden');
-  showInputScreen();
-});
-
-copyButton.addEventListener('click',async()=>{
-  if(!lastResult)return;
-  try{
-    await navigator.clipboard.writeText(lastResult);
-  }catch{
-    const t=document.createElement('textarea');
-    t.value=lastResult;
-    document.body.appendChild(t);
-    t.select();
-    document.execCommand('copy');
-    t.remove();
-  }
-  copyButton.textContent='복사 완료';
-  setTimeout(()=>copyButton.textContent='결과 복사',1400);
-});
-if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}
+const $=id=>document.getElementById(id);const requestEl=$('request'),requestCountEl=$('requestCount'),writeButton=$('writeButton'),retryButton=$('retryButton'),copyButton=$('copyButton'),downloadButton=$('downloadButton'),restoreButton=$('restoreButton'),resultEl=$('result'),resultMeta=$('resultMeta'),statusEl=$('status'),editArea=$('editArea'),editRequestEl=$('editRequest'),editButton=$('editButton'),newButton=$('newButton'),inputCard=$('inputCard'),resultCard=$('resultCard'),toneEl=$('tone'),lengthEl=$('length'),installButton=$('installButton'),historyButton=$('historyButton'),historyDrawer=$('historyDrawer'),drawerBackdrop=$('drawerBackdrop'),closeHistory=$('closeHistory'),historyList=$('historyList'),clearHistory=$('clearHistory');
+const presetButtons=[...document.querySelectorAll('.preset')],quickButtons=[...document.querySelectorAll('.quick')];let selectedPreset=localStorage.getItem('lumenPreset')||'자유',lastResult='',originalResult='',activeHistoryId=null,installPrompt=null,isLoading=false;const HISTORY_KEY='lumenHistoryV1';
+function getHistory(){try{return JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]')}catch{return[]}}function setHistory(items){localStorage.setItem(HISTORY_KEY,JSON.stringify(items.slice(0,50)))}function makeTitle(request){return(request||'제목 없는 글').replace(/\s+/g,' ').trim().slice(0,42)}
+function updateCount(){requestCountEl.textContent=requestEl.value.length;localStorage.setItem('lumenDraft',requestEl.value)}requestEl.value=localStorage.getItem('lumenDraft')||'';updateCount();requestEl.addEventListener('input',updateCount);
+presetButtons.forEach(b=>{b.classList.toggle('active',b.dataset.preset===selectedPreset);b.addEventListener('click',()=>{selectedPreset=b.dataset.preset;localStorage.setItem('lumenPreset',selectedPreset);presetButtons.forEach(x=>x.classList.toggle('active',x===b));requestEl.focus()})});document.querySelectorAll('.example').forEach(b=>b.addEventListener('click',()=>{requestEl.value=b.dataset.example;updateCount();requestEl.focus()}));
+function showInputScreen(){resultCard.classList.add('hidden');inputCard.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});requestEl.focus()}function showResultScreen(){inputCard.classList.add('hidden');resultCard.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
+function setLoading(v){isLoading=v;writeButton.disabled=v;retryButton.disabled=v||!lastResult;editButton.disabled=v;quickButtons.forEach(b=>b.disabled=v||!lastResult)}
+function showLoadingScreen(message){showResultScreen();resultEl.className='loading-box';resultEl.value='';resultEl.placeholder=message;resultEl.disabled=true;resultMeta.textContent='';copyButton.disabled=retryButton.disabled=downloadButton.disabled=restoreButton.disabled=true;editArea.classList.add('hidden')}
+function updateMeta(){const text=resultEl.value;const chars=text.replace(/\s/g,'').length;const words=text.trim()?text.trim().split(/\s+/).length:0;resultMeta.textContent=`약 ${words}단어 · ${chars}자`;lastResult=text}
+function saveHistory(text){const items=getHistory(),now=new Date().toISOString();if(activeHistoryId){const i=items.findIndex(x=>x.id===activeHistoryId);if(i>=0){items[i]={...items[i],text,request:requestEl.value.trim(),preset:selectedPreset,tone:toneEl.value,length:lengthEl.value,updatedAt:now};setHistory(items);return}}const item={id:'h_'+Date.now(),title:makeTitle(requestEl.value),request:requestEl.value.trim(),text,preset:selectedPreset,tone:toneEl.value,length:lengthEl.value,createdAt:now,updatedAt:now};activeHistoryId=item.id;setHistory([item,...items])}
+function showResult(text,isError=false,{save=true,asOriginal=true}={}){resultEl.disabled=false;resultEl.className='result-editor';resultEl.value=text;if(isError){resultEl.classList.add('error');copyButton.disabled=retryButton.disabled=downloadButton.disabled=restoreButton.disabled=true;editArea.classList.add('hidden');resultMeta.textContent='';return}lastResult=text;if(asOriginal)originalResult=text;updateMeta();copyButton.disabled=retryButton.disabled=downloadButton.disabled=restoreButton.disabled=false;editArea.classList.remove('hidden');if(save)saveHistory(text)}
+resultEl.addEventListener('input',()=>{if(isLoading)return;updateMeta();if(activeHistoryId){clearTimeout(resultEl._saveTimer);resultEl._saveTimer=setTimeout(()=>saveHistory(resultEl.value),500)}});
+async function callApi(payload){if(!navigator.onLine)throw new Error('인터넷 연결을 확인해 주세요.');let r;try{r=await fetch('/api/write',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})}catch{throw new Error('서버에 연결하지 못했습니다. 배포 상태와 인터넷 연결을 확인해 주세요.')}const contentType=r.headers.get('content-type')||'';let d={};if(contentType.includes('application/json'))d=await r.json().catch(()=>({}));else{const raw=await r.text().catch(()=> '');if(r.status===404)throw new Error('AI API 경로를 찾지 못했습니다. Vercel에 프로젝트 전체 폴더를 다시 배포해 주세요.');throw new Error(raw&&raw.length<180?raw:'서버가 올바르지 않은 응답을 보냈습니다.')}if(!r.ok)throw new Error(d.error||`글 작성에 실패했습니다. (오류 ${r.status})`);if(!d.text)throw new Error('AI 결과가 비어 있습니다. 다시 시도해 주세요.');return d.text}
+async function generate(){const request=requestEl.value.trim();if(request.length<4){requestEl.focus();statusEl.textContent='요청 내용을 4자 이상 입력해 주세요.';return}statusEl.textContent='';activeHistoryId=null;setLoading(true);showLoadingScreen('AI가 글을 작성하고 있습니다.');try{showResult(await callApi({mode:'generate',preset:selectedPreset,tone:toneEl.value,length:lengthEl.value,request}))}catch(e){showResult(e.message,true)}finally{setLoading(false)}}
+async function revise(instructionOverride=''){const instruction=(instructionOverride||editRequestEl.value).trim();if(!lastResult||!instruction)return;setLoading(true);showLoadingScreen('요청에 맞게 글을 수정하고 있습니다.');try{showResult(await callApi({mode:'revise',preset:selectedPreset,tone:toneEl.value,length:lengthEl.value,request:requestEl.value.trim(),previousText:lastResult,instruction}),false,{save:true,asOriginal:false});editRequestEl.value=''}catch(e){showResult(e.message,true)}finally{setLoading(false)}}
+writeButton.addEventListener('click',generate);retryButton.addEventListener('click',generate);editButton.addEventListener('click',()=>revise());quickButtons.forEach(b=>b.addEventListener('click',()=>revise(b.dataset.instruction)));document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();resultCard.classList.contains('hidden')?generate():revise()}});
+newButton.addEventListener('click',()=>{lastResult='';originalResult='';activeHistoryId=null;resultEl.className='result-editor';resultEl.value='';resultMeta.textContent='';editRequestEl.value='';copyButton.disabled=retryButton.disabled=downloadButton.disabled=restoreButton.disabled=true;editArea.classList.add('hidden');showInputScreen()});
+restoreButton.addEventListener('click',()=>{if(!originalResult)return;resultEl.value=originalResult;updateMeta();saveHistory(resultEl.value)});copyButton.addEventListener('click',async()=>{if(!lastResult)return;try{await navigator.clipboard.writeText(lastResult)}catch{resultEl.select();document.execCommand('copy')}copyButton.textContent='복사 완료';setTimeout(()=>copyButton.textContent='복사',1400)});downloadButton.addEventListener('click',()=>{if(!lastResult)return;const blob=new Blob([lastResult],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='lumen-ai-result.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)});
+function renderHistory(){const items=getHistory();historyList.innerHTML='';if(!items.length){historyList.innerHTML='<div class="history-empty">아직 저장된 작성 결과가 없습니다.</div>';return}items.forEach(item=>{const el=document.createElement('article');el.className='history-item';const d=new Date(item.updatedAt||item.createdAt);el.innerHTML=`<h3></h3><p>${item.preset} · ${d.toLocaleString('ko-KR')}</p><div class="history-actions"><button data-open>열기</button><button data-delete>삭제</button></div>`;el.querySelector('h3').textContent=item.title||makeTitle(item.request);el.querySelector('[data-open]').addEventListener('click',()=>openHistoryItem(item));el.querySelector('[data-delete]').addEventListener('click',()=>{setHistory(getHistory().filter(x=>x.id!==item.id));renderHistory()});historyList.appendChild(el)})}
+function openHistory(){renderHistory();historyDrawer.classList.remove('hidden');drawerBackdrop.classList.remove('hidden')}function closeHistoryDrawer(){historyDrawer.classList.add('hidden');drawerBackdrop.classList.add('hidden')}function openHistoryItem(item){selectedPreset=item.preset||'자유';presetButtons.forEach(b=>b.classList.toggle('active',b.dataset.preset===selectedPreset));toneEl.value=item.tone||'자연스럽게';lengthEl.value=item.length||'medium';requestEl.value=item.request||'';updateCount();activeHistoryId=item.id;originalResult=item.text||'';showResult(item.text||'',false,{save:false,asOriginal:false});showResultScreen();closeHistoryDrawer()}
+historyButton.addEventListener('click',openHistory);closeHistory.addEventListener('click',closeHistoryDrawer);drawerBackdrop.addEventListener('click',closeHistoryDrawer);clearHistory.addEventListener('click',()=>{if(confirm('저장된 작성 이력을 모두 삭제할까요?')){setHistory([]);renderHistory();activeHistoryId=null}});
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;installButton.classList.remove('hidden')});installButton.addEventListener('click',async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;installButton.classList.add('hidden')});window.addEventListener('appinstalled',()=>installButton.classList.add('hidden'));if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
 </script>
 </body>
 </html>
