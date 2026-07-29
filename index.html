@@ -51,9 +51,46 @@ function updateMeta(){const text=resultEl.value;const chars=text.replace(/\s/g,'
 function saveHistory(text){const items=getHistory(),now=new Date().toISOString();if(activeHistoryId){const i=items.findIndex(x=>x.id===activeHistoryId);if(i>=0){items[i]={...items[i],text,request:requestEl.value.trim(),preset:selectedPreset,tone:toneEl.value,length:lengthEl.value,updatedAt:now};setHistory(items);return}}const item={id:'h_'+Date.now(),title:makeTitle(requestEl.value),request:requestEl.value.trim(),text,preset:selectedPreset,tone:toneEl.value,length:lengthEl.value,createdAt:now,updatedAt:now};activeHistoryId=item.id;setHistory([item,...items])}
 function showResult(text,isError=false,{save=true,asOriginal=true}={}){resultEl.disabled=false;resultEl.className='result-editor';resultEl.value=text;if(isError){resultEl.classList.add('error');copyButton.disabled=retryButton.disabled=downloadButton.disabled=restoreButton.disabled=true;editArea.classList.add('hidden');resultMeta.textContent='';return}lastResult=text;if(asOriginal)originalResult=text;updateMeta();copyButton.disabled=retryButton.disabled=downloadButton.disabled=restoreButton.disabled=false;editArea.classList.remove('hidden');if(save)saveHistory(text)}
 resultEl.addEventListener('input',()=>{if(isLoading)return;updateMeta();if(activeHistoryId){clearTimeout(resultEl._saveTimer);resultEl._saveTimer=setTimeout(()=>saveHistory(resultEl.value),500)}});
-const VERCEL_API_ORIGIN='https://lumen-git-main-hoony2.vercel.app';
-function getApiUrl(){const isVercel=location.hostname.endsWith('.vercel.app');return isVercel?'/api/write':`${VERCEL_API_ORIGIN}/api/write`}
-async function callApi(payload){if(!navigator.onLine)throw new Error('인터넷 연결을 확인해 주세요.');let r;try{r=await fetch(getApiUrl(),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})}catch{throw new Error('AI 서버에 연결하지 못했습니다. Vercel 배포 상태를 확인해 주세요.')}const contentType=r.headers.get('content-type')||'';let d={};if(contentType.includes('application/json'))d=await r.json().catch(()=>({}));else{await r.text().catch(()=> '');if(r.status===405)throw new Error('현재 GitHub Pages 주소에서 AI API를 직접 호출할 수 없습니다. 수정 버전을 다시 배포하거나 Vercel 주소로 접속해 주세요.');if(r.status===404)throw new Error('AI API 경로를 찾지 못했습니다. Vercel 배포 상태를 확인해 주세요.');throw new Error(`AI 서버가 올바르지 않은 응답을 보냈습니다. (오류 ${r.status})`)}if(!r.ok)throw new Error(d.error||`글 작성에 실패했습니다. (오류 ${r.status})`);if(!d.text)throw new Error('AI 결과가 비어 있습니다. 다시 시도해 주세요.');return d.text}
+const VERCEL_API_ORIGINS=[
+  'https://lumen-git-main-hoony2.vercel.app',
+  'https://lumen-blxbzzpaz-hoony2.vercel.app'
+];
+function getApiUrls(){
+  if(location.hostname.endsWith('.vercel.app')) return ['/api/write'];
+  return VERCEL_API_ORIGINS.map(origin=>`${origin}/api/write`);
+}
+async function callApi(payload){
+  if(!navigator.onLine) throw new Error('인터넷 연결을 확인해 주세요.');
+  const failures=[];
+  for(const url of getApiUrls()){
+    let r;
+    try{
+      r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),mode:'cors',cache:'no-store'});
+    }catch(error){
+      failures.push(`${url}: 연결 실패`);
+      continue;
+    }
+    const contentType=r.headers.get('content-type')||'';
+    let d={};
+    if(contentType.includes('application/json')) d=await r.json().catch(()=>({}));
+    else {
+      const text=await r.text().catch(()=> '');
+      failures.push(`${url}: HTTP ${r.status}`);
+      if(r.status===401||r.status===403) throw new Error('Vercel 배포 보호가 켜져 있거나 API 접근이 차단되었습니다. Vercel의 Deployment Protection을 확인해 주세요.');
+      if(r.status===404) continue;
+      if(r.status===405) continue;
+      if(text.toLowerCase().includes('authentication')) throw new Error('Vercel 배포 보호 때문에 AI API에 접근하지 못했습니다.');
+      continue;
+    }
+    if(!r.ok){
+      if(r.status===404){failures.push(`${url}: API 없음`);continue;}
+      throw new Error(d.error||`글 작성에 실패했습니다. (오류 ${r.status})`);
+    }
+    if(!d.text) throw new Error('AI 결과가 비어 있습니다. 다시 시도해 주세요.');
+    return d.text;
+  }
+  throw new Error('AI 서버 주소에 연결하지 못했습니다. Vercel의 최신 Production 배포와 /api/health 주소를 확인해 주세요.');
+}
 async function generate(){const request=requestEl.value.trim();if(request.length<4){requestEl.focus();statusEl.textContent='요청 내용을 4자 이상 입력해 주세요.';return}statusEl.textContent='';activeHistoryId=null;setLoading(true);showLoadingScreen('AI가 글을 작성하고 있습니다.');try{showResult(await callApi({mode:'generate',preset:selectedPreset,tone:toneEl.value,length:lengthEl.value,request}))}catch(e){showResult(e.message,true)}finally{setLoading(false)}}
 async function revise(instructionOverride=''){const instruction=(instructionOverride||editRequestEl.value).trim();if(!lastResult||!instruction)return;setLoading(true);showLoadingScreen('요청에 맞게 글을 수정하고 있습니다.');try{showResult(await callApi({mode:'revise',preset:selectedPreset,tone:toneEl.value,length:lengthEl.value,request:requestEl.value.trim(),previousText:lastResult,instruction}),false,{save:true,asOriginal:false});editRequestEl.value=''}catch(e){showResult(e.message,true)}finally{setLoading(false)}}
 writeButton.addEventListener('click',generate);retryButton.addEventListener('click',generate);editButton.addEventListener('click',()=>revise());quickButtons.forEach(b=>b.addEventListener('click',()=>revise(b.dataset.instruction)));document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();resultCard.classList.contains('hidden')?generate():revise()}});

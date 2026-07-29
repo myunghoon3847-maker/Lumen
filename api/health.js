@@ -1,8 +1,5 @@
 module.exports=function handler(req,res){
-  const origin=req.headers.origin||'';
-  const allowedOrigin=/^https:\/\/[a-z0-9-]+\.github\.io$/i.test(origin)||/^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin)?origin:'';
-  if(allowedOrigin)res.setHeader('Access-Control-Allow-Origin',allowedOrigin);
-  res.setHeader('Vary','Origin');
+  res.setHeader('Access-Control-Allow-Origin','*');
   res.setHeader('Access-Control-Allow-Methods','GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers','Content-Type');
   if(req.method==='OPTIONS')return res.status(204).end();
