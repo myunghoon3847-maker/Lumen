@@ -1,8 +1,12 @@
 {
   "name": "lumen-ai",
-  "version": "1.0.0",
+  "version": "1.6.5-security.1",
   "private": true,
   "description": "모바일 배포형 AI 글쓰기 웹앱",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check api/write.js && node --check api/health.js && node --check lib/security.js && node --check lib/rate-limit.js && node --check app.js && node --check sw.js && node --check public/app.js && node --check public/sw.js && node --check write.js && node --check health.js"
+  },
   "engines": {
     "node": ">=18"
   }
